@@ -1,0 +1,31 @@
+{
+    "project_type": "javascript",
+
+    "debugMode" : 1,
+    "showFPS" : true,
+    "frameRate" : 60,
+    "id" : "gameCanvas",
+    "renderMode" : 2,
+    "engineDir":"frameworks/cocos2d-html5",
+
+    "modules" : ["cocos2d", "extensions", "external"],
+
+    "jsList" : [
+        "src/resource.js",
+        "src/app.js",
+        "src/physics.js",
+        "src/TMXReader.js",
+        "src/GlobalValue.js",
+        "src/PlayerBody.js",
+        "src/MagneticSystem.js",
+        "src/Wall.js",
+        "src/GameLayer.js",
+        "src/PlayerBody.js",
+        "src/TestLayer.js",
+        "src/Item.js",
+        "src/ItemsController.js",
+        "src/Level.js",
+        "src/ScoreController.js",
+        "src/BackGroundLayer.js"
+    ]
+}

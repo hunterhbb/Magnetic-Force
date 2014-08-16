@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1" height="1" tilewidth="1280" tileheight="768">
+ <tileset firstgid="1" name="sceneA" tilewidth="1280" tileheight="768">
+  <image source="sceneA.jpg" trans="ff00ff" width="1280" height="768"/>
+ </tileset>
+ <objectgroup name="back" width="1" height="1">
+  <properties>
+   <property name="className" value="null"/>
+  </properties>
+  <object gid="1" x="-2" y="768"/>
+ </objectgroup>
+ <objectgroup name="Wall" width="1" height="1">
+  <properties>
+   <property name="className" value="null"/>
+  </properties>
+  <object x="-9" y="734" width="1303" height="42"/>
+  <object x="-22" y="492" width="63" height="332"/>
+  <object x="1244" y="551" width="55" height="242"/>
+  <object type="Gate" x="-18" y="369" width="44" height="119"/>
+  <object type="Gate" x="1240" y="381" width="44" height="119"/>
+  <object x="6" y="263">
+   <polygon points="0,0 86,26 87,79 -4,115"/>
+  </object>
+  <object x="7" y="479">
+   <polygon points="0,0 82,-3 76,98 2,137"/>
+  </object>
+  <object x="1172" y="501">
+   <polygon points="0,0 30,-16 104,5 106,184"/>
+  </object>
+  <object x="1148" y="180" width="116" height="47"/>
+  <object x="5" y="64" width="49" height="256"/>
+  <object x="1237" y="60">
+   <polygon points="3,-7 57,-43 54,339 -72,275"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Items" width="1" height="1">
+  <object type="CornerTrampoline" x="4" y="700" width="76" height="72"/>
+  <object type="CornerTrampoline" x="1213" y="703" width="76" height="72"/>
+ </objectgroup>
+</map>
