@@ -17,5 +17,7 @@ var Level = {
         }
     },
     fp_gate_info : cc.rect(0, 0, 0, 0),
-    sp_gate_info : cc.rect(0, 0, 0, 0)
+    sp_gate_info : cc.rect(0, 0, 0, 0),
+
+    attack_gate_info : cc.rect(444, 722, 425, 40)
 };

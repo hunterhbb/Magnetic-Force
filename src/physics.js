@@ -4,6 +4,9 @@ var Physics = {
     world:null,
     scene:null,
     inited: null,
+    handlers: [],
+    shapes: [],
+    bodies: [],
 
     calculVector: function(a) {
         /*var s = a.a, d = a.b;
@@ -35,7 +38,62 @@ var Physics = {
         this.inited = true;
     },
     update:function(){
-        this.world.step(CPSTEP);
+        if (this.inited)
+            this.world.step(CPSTEP);
+    },
+    addCollisionHandler: function(a, b, begin, preSolve, postSolve, separate) {
+        if (this.inited) {
+            this.world.addCollisionHandler(a, b, begin, preSolve, postSolve, separate);
+            this.handlers.push([a, b]);
+        }
+    },
+    registerShape: function(shape) {
+        Physics.shapes.push(shape);
+    },
+    registerBody: function (body){
+        Physics.bodies.push(body);
+    },
+
+    _realClear: function() {
+        if (this.inited) {
+            var space = this.world, handler, shape, body;
+            // Remove handlers
+            for (var i = this.handlers.length-1; i >= 0; --i) {
+                handler = this.handlers[i];
+                space.removeCollisionHandler(handler[0], handler[1]);
+            }
+            this.handlers = [];
+
+            // Remove shapes
+            for (var i = this.shapes.length-1; i >= 0; --i) {
+                shape = this.shapes[i];
+                if (!space.containsShape(shape))
+                    continue;
+                if (shape.body.isStatic())
+                    space.removeStaticShape(shape);
+                else space.removeShape(shape);
+            }
+            this.shapes = [];
+
+            // Remove bodies
+            for (var i = this.bodies.length-1; i >= 0; --i) {
+                body = this.bodies[i];
+                if (!space.containsBody(body))
+                    continue;
+                space.removeBody(body);
+            }
+            this.bodies = [];
+        }
+    },
+    clear:function() {
+        var space = this.world;
+        if (space) {
+            space.eachShape(this.registerShape);
+            space.eachBody(this.registerBody);
+            if (space.isLocked())
+                space.addPostStepCallback(this._realClear.bind(this));
+            else this._realClear();
+        }
     }
 };
 var StaticObject = cc.Class.extend({
@@ -63,7 +121,7 @@ var StaticObject = cc.Class.extend({
     },
 
     removeSelf: function () {
-        Physics.world.removeShape(this.shape);
+        Physics.world.removeStaticShape(this.shape);
     }
 });
 var StaticPolyObject = cc.Class.extend({
@@ -85,7 +143,7 @@ var StaticPolyObject = cc.Class.extend({
     },
 
     removeSelf: function () {
-        Physics.world.removeShape(this.shape);
+        Physics.world.removeStaticShape(this.shape);
     }
 });
 
@@ -118,6 +176,11 @@ var DynamicSensor = cc.Class.extend({
         Physics.world.addShape(this.shape);
         this.shape.obj = this;
         this.view = view;
+    },
+
+    removeSelf: function () {
+        Physics.world.removeShape(this.shape);
+        Physics.world.removeBody(this.body);
     }
 });
 var PhysicsObject = cc.Class.extend({

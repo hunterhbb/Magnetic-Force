@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1" height="1" tilewidth="1280" tileheight="768">
+ <tileset firstgid="1" name="sceneA" tilewidth="1280" tileheight="768">
+  <image source="sceneA.jpg" trans="ff00ff" width="1280" height="768"/>
+ </tileset>
+ <tileset firstgid="2" name="sceneB" tilewidth="1280" tileheight="768">
+  <image source="sceneB.png" trans="ff00ff" width="1280" height="768"/>
+ </tileset>
+ <objectgroup name="back2" width="1" height="1">
+  <properties>
+   <property name="className" value="null"/>
+  </properties>
+  <object gid="2" x="2" y="770"/>
+ </objectgroup>
+ <objectgroup name="Walls" width="1" height="1">
+  <properties>
+   <property name="className" value="null"/>
+  </properties>
+  <object x="2" y="735" width="1281" height="84"/>
+  <object type="TrampolineNoTex" x="584" y="709" width="151" height="86"/>
+  <object x="-56" y="-3" width="461" height="160"/>
+  <object x="872" y="-6" width="461" height="160"/>
+  <object x="-15" y="424" width="75" height="158"/>
+  <object x="1224" y="421" width="75" height="158"/>
+  <object x="-22" y="584" width="103" height="156"/>
+  <object x="1202" y="578" width="103" height="163"/>
+  <object x="81" y="613">
+   <polygon points="0,0 61,-17 75,1 78,34 1,64"/>
+  </object>
+  <object x="401" y="1">
+   <polygon points="0,0 87,1 86,40 5,146"/>
+  </object>
+  <object x="1122" y="608">
+   <polygon points="0,0 17,-21 108,5 86,76 -2,37"/>
+  </object>
+ </objectgroup>
+</map>

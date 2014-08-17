@@ -1,8 +1,8 @@
 {
     "project_type": "javascript",
 
-    "debugMode" : 1,
-    "showFPS" : true,
+    "debugMode" : 0,
+    "showFPS" : false,
     "frameRate" : 60,
     "id" : "gameCanvas",
     "renderMode" : 2,
@@ -12,7 +12,6 @@
 
     "jsList" : [
         "src/resource.js",
-        "src/app.js",
         "src/physics.js",
         "src/TMXReader.js",
         "src/GlobalValue.js",
@@ -20,12 +19,16 @@
         "src/MagneticSystem.js",
         "src/Wall.js",
         "src/GameLayer.js",
+        "src/OneGoalLayer.js",
+        "src/SceneController.js",
         "src/PlayerBody.js",
         "src/TestLayer.js",
         "src/Item.js",
         "src/ItemsController.js",
         "src/Level.js",
         "src/ScoreController.js",
-        "src/BackGroundLayer.js"
+        "src/OverLayer.js",
+        "src/BackGroundLayer.js",
+        "src/Config.js"
     ]
 }

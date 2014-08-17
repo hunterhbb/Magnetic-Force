@@ -95,7 +95,13 @@ var Item = cc.Sprite.extend({
     },
     reuse : function(file, type, x, y, sOrR) {
         this.release();
-        this.setSpriteFrame(file.substr(1));
+        if (file[0] == "#")
+            this.setSpriteFrame(file.substr(1));
+        else {
+            var tex = cc.textureCache.textureForKey(file);
+            this.setTexture(tex);
+            this.setTextureRect(cc.rect(0, 0, tex.width, tex.height));
+        }
         var size = this.getContentSize();
 
         var isCircle = type == Item.CIRCLE_SHAPE;
@@ -141,28 +147,19 @@ var Bomb = Item.extend({
     isEndExplode : false,
     isWarnning : false,
     anime : null,
+    nastyDog : false,
+    naughtyDog : false,
     ctor : function (file, type, x, y, sOrR) {
         this._super(file, type, x, y , sOrR);
         this.time = EXPLODE_TIME + EXPLODE_DEVIATION_TIME * Math.random();
         this.phyObj.shape.setCollisionType(Bomb.COL_TYPE);
-        this.setAnchorPoint(cc.p(0.35,0.35));
-        var animFrames = [];
-        for (var i = 1; i < 4; i++) {
-            var str = "bomb" + i + ".png";
-            var frame = cc.spriteFrameCache.getSpriteFrame(str);
-            animFrames.push(frame);
-        }
-        var animation = new cc.Animation(animFrames, 0.1);
-        this.anime = cc.animate(animation).repeatForever();
-        this.runAction(this.anime);
     },
     update : function (dt) {
         this._super();
         this.time -= dt;
-        //console.log(this.time);
 
         if (!this.isExplode && this.time < EXPLODE_WARNNING_TIME) {
-            if (!this.isWarnning) {
+            if (!this.isWarnning && this.anime) {
                 this.isWarnning = true;
                 var repeatAction = cc.repeat(cc.sequence(cc.tintTo(1,128,0,0),cc.tintTo(1,255,200,200)),2);
                 this.runAction(cc.sequence(repeatAction,cc.tintTo(1,200,75,75)));
@@ -177,9 +174,13 @@ var Bomb = Item.extend({
                 this.bomb_armature.phyObj = new CircleObject(EXPLODE_WEIGHT, EXPLODE_RADIUS, this.maxSpeed, this.bomb_armature, origin);
                 this.bomb_armature.phyObj.setFriction(0);
                 this.bomb_armature.phyObj.setElasticity(EXPLODE_ELASTICITY);
-//        var body = this.phyObj.body;
-//        body.setMoment(Infinity);
                 this.bomb_armature.phyObj.shape.setCollisionType(Bomb.EXPLODE_COL_TYPE);
+
+                if (this.phyObj) {
+                    MagneticSystem.removeOtherItem(this.phyObj.body);
+                    this.phyObj.removeSelf();
+                    this.phyObj = null;
+                }
 
                 this.bomb_armature.scaleX = 2;
                 this.bomb_armature.scaleY = 2;
@@ -193,36 +194,27 @@ var Bomb = Item.extend({
             }
         }
 
-//        if (!this.isExplode && this.time < 0) {
-//            this.isExplode = true;
-//            this.bomb_armature = ccs.Armature.create("explode");
-//            this.bomb_armature.retain();
-//            var origin = this.getPosition();
-//
-//            this.bomb_armature.phyObj = new CircleObject(EXPLODE_WEIGHT, EXPLODE_RADIUS, this.maxSpeed, this.bomb_armature, origin);
-//            this.bomb_armature.phyObj.setFriction(0);
-//            this.bomb_armature.phyObj.setElasticity(EXPLODE_ELASTICITY);
-////        var body = this.phyObj.body;
-////        body.setMoment(Infinity);
-//            this.bomb_armature.phyObj.shape.setCollisionType(Bomb.EXPLODE_COL_TYPE);
-//
-//            this.bomb_armature.scaleX = 2;
-//            this.bomb_armature.scaleY = 2;
-//            this.bomb_armature.getAnimation().playWithIndex(0);
-//            this.bomb_armature.setPosition(origin);
-//            this.getParent().addChild(this.bomb_armature);
-//        }
-//        console.log("explode : " + this.isExplode + "ecplodedddd " + this.isEndExplode);
         if (this.isExplode && !this.isEndExplode) {
 
             if (this.bomb_armature.getAnimation().isComplete()) {
                 this.isEndExplode = true;
-//                console.log("explode : " + this.isExplode + "ecplodedddd " + this.isEndExplode);
                 this.bomb_armature.phyObj.removeSelf();
                 this.bomb_armature.removeFromParent();
                 this.bomb_armature = null;
-//                this.die();
             }
+        }
+    },
+
+    captured : function (nasty) {
+        if (nasty) {
+            this.color = cc.color(255, 0, 0, 100);
+            this.nastyDog = true;
+            this.naughtyDog = false;
+        }
+        else {
+            this.color = cc.color(0, 0, 255, 100);
+            this.nastyDog = false;
+            this.naughtyDog = true;
         }
     },
 
@@ -231,9 +223,11 @@ var Bomb = Item.extend({
     },
 
     _realDie : function() {
-        MagneticSystem.removeOtherItem(this.phyObj.body);
-        this.phyObj.removeSelf();
-        this.phyObj = null;
+        if (this.phyObj) {
+            MagneticSystem.removeOtherItem(this.phyObj.body);
+            this.phyObj.removeSelf();
+            this.phyObj = null;
+        }
         this.scheduleOnce(this._realDieWithArmature, 0.7);
         this.opacity = 0;
     },
@@ -244,27 +238,42 @@ var Bomb = Item.extend({
     reuse : function (file, type, x, y, sOrR) {
         this._super(file, type, x, y, sOrR);
         this.opacity = 255;
-        this.setAnchorPoint(cc.p(0.35,0.35));
+        this.isExplode = false;
+        this.isEndExplode = false;
+        this.isWarnning = false;
+        this.naughtyDog = false;
+        this.nastyDog = false;
+        this.color = cc.color(255,255,255);
+        this.time = EXPLODE_TIME + EXPLODE_DEVIATION_TIME * Math.random();
+        this.phyObj.shape.setCollisionType(Bomb.COL_TYPE);
+    }
+});
+
+Bomb.COL_TYPE = GLOBAL_COL_TYPE++;
+Bomb.EXPLODE_COL_TYPE = GLOBAL_COL_TYPE++;
+Bomb.animation = null;
+Bomb.create = function (file, type, x, y, sOrR) {
+    var ret = null;
+    if (cc.pool.hasObj(Bomb))
+        ret = cc.pool.getFromPool(Bomb, file, type, x, y, sOrR);
+    else
+        ret = new Bomb(file, type, x, y, sOrR);
+
+    ret.setAnchorPoint(cc.p(0.35,0.35));
+    if (!Bomb.animation) {
         var animFrames = [];
         for (var i = 1; i < 4; i++) {
             var str = "bomb" + i + ".png";
             var frame = cc.spriteFrameCache.getSpriteFrame(str);
             animFrames.push(frame);
         }
-        var animation = new cc.Animation(animFrames, 0.1);
-        this.anime = cc.animate(animation).repeatForever();
-        this.runAction(this.anime);
-        this.isExplode = false;
-        this.isEndExplode = false;
-        this.isWarnning = false;
-        this.color = cc.color(255,255,255);
-        this.time = EXPLODE_TIME + EXPLODE_DEVIATION_TIME * Math.random();
+        Bomb.animation = new cc.Animation(animFrames, 0.1);
     }
-});
-
-Bomb.COL_TYPE = GLOBAL_COL_TYPE++;
-Bomb.EXPLODE_COL_TYPE = GLOBAL_COL_TYPE++;
-Bomb.create = function (file, type, x, y, sOrR) {
+    ret.anime = cc.animate(Bomb.animation).repeatForever();
+    ret.runAction(ret.anime);
+    return ret;
+};
+Bomb.createNoAnime = function (file, type, x, y, sOrR) {
     var ret = null;
     if (cc.pool.hasObj(Bomb))
         ret = cc.pool.getFromPool(Bomb, file, type, x, y, sOrR);
@@ -274,6 +283,13 @@ Bomb.create = function (file, type, x, y, sOrR) {
 };
 
 
+var TrampolineNoTex = cc.Class.extend({
+    ctor : function (objDesc) {
+        var x = parseInt(objDesc.x), y = parseInt(objDesc.y), w = parseInt(objDesc.width), h = parseInt(objDesc.height);
+        var phyObj = new StaticObject(x, y, w, h, this);
+        phyObj.shape.setCollisionType(Trampoline.COL_TYPE);
+    }
+});
 
 var Trampoline = cc.Sprite.extend({
     texfile : res.Tube,
@@ -311,3 +327,20 @@ var CornerTrampoline = Trampoline.extend({
     }
 });
 CornerTrampoline.COL_TYPE = GLOBAL_COL_TYPE++;
+
+var Platform = cc.Sprite.extend({
+    texfile : res.Tube,
+    phyObj : null,
+
+    ctor : function (objDesc) {
+        this._super(this.texfile);
+        var x = parseInt(objDesc.x), y = parseInt(objDesc.y), w = parseInt(objDesc.width), h = parseInt(objDesc.height);
+        this.x = x + w/2;
+        this.y = y + h;
+        this.scaleX = w / this.width;
+        this.scaleY = h / this.height;
+        this.rotation = 180;
+
+        this.phyObj = new StaticObject(x, y, w, h, this);
+    }
+});

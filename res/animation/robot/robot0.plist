@@ -197,9 +197,9 @@
 			<key>robotAeyeAabsort.png</key>
 			<dict>
 				<key>width</key>
-				<integer>24</integer>
+				<integer>26</integer>
 				<key>height</key>
-				<integer>23</integer>
+				<integer>29</integer>
 				<key>originalWidth</key>
 				<integer>26</integer>
 				<key>originalHeight</key>
@@ -209,28 +209,28 @@
 				<key>y</key>
 				<integer>357</integer>
 				<key>offsetX</key>
-				<real>-1</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>-1</real>
+				<real>0</real>
 			</dict>
 			<key>robotAeyeArelease.png</key>
 			<dict>
 				<key>width</key>
-				<integer>24</integer>
+				<integer>26</integer>
 				<key>height</key>
-				<integer>23</integer>
+				<integer>29</integer>
 				<key>originalWidth</key>
 				<integer>26</integer>
 				<key>originalHeight</key>
 				<integer>29</integer>
 				<key>x</key>
-				<integer>864</integer>
+				<integer>866</integer>
 				<key>y</key>
 				<integer>357</integer>
 				<key>offsetX</key>
-				<real>-1</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>-1</real>
+				<real>0</real>
 			</dict>
 			<key>robotAeyeB.png</key>
 			<dict>
@@ -243,7 +243,7 @@
 				<key>originalHeight</key>
 				<integer>29</integer>
 				<key>x</key>
-				<integer>890</integer>
+				<integer>894</integer>
 				<key>y</key>
 				<integer>357</integer>
 				<key>offsetX</key>
@@ -254,40 +254,40 @@
 			<key>robotAeyeBabsort.png</key>
 			<dict>
 				<key>width</key>
-				<integer>23</integer>
+				<integer>24</integer>
 				<key>height</key>
-				<integer>27</integer>
+				<integer>29</integer>
 				<key>originalWidth</key>
 				<integer>24</integer>
 				<key>originalHeight</key>
 				<integer>29</integer>
 				<key>x</key>
-				<integer>915</integer>
+				<integer>919</integer>
 				<key>y</key>
 				<integer>357</integer>
 				<key>offsetX</key>
-				<real>-0.5</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>-1</real>
+				<real>0</real>
 			</dict>
 			<key>robotAeyeBrelease.png</key>
 			<dict>
 				<key>width</key>
-				<integer>23</integer>
+				<integer>24</integer>
 				<key>height</key>
-				<integer>27</integer>
+				<integer>29</integer>
 				<key>originalWidth</key>
 				<integer>24</integer>
 				<key>originalHeight</key>
 				<integer>29</integer>
 				<key>x</key>
-				<integer>940</integer>
+				<integer>945</integer>
 				<key>y</key>
 				<integer>357</integer>
 				<key>offsetX</key>
-				<real>-0.5</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>-1</real>
+				<real>0</real>
 			</dict>
 			<key>robotBbody.png</key>
 			<dict>
@@ -406,7 +406,7 @@
 			<key>robotBeyeAabsort.png</key>
 			<dict>
 				<key>width</key>
-				<integer>21</integer>
+				<integer>22</integer>
 				<key>height</key>
 				<integer>24</integer>
 				<key>originalWidth</key>
@@ -418,14 +418,14 @@
 				<key>y</key>
 				<integer>714</integer>
 				<key>offsetX</key>
-				<real>0</real>
+				<real>-0.5</real>
 				<key>offsetY</key>
 				<real>0</real>
 			</dict>
 			<key>robotBeyeArelease.png</key>
 			<dict>
 				<key>width</key>
-				<integer>21</integer>
+				<integer>23</integer>
 				<key>height</key>
 				<integer>24</integer>
 				<key>originalWidth</key>
@@ -433,7 +433,7 @@
 				<key>originalHeight</key>
 				<integer>24</integer>
 				<key>x</key>
-				<integer>501</integer>
+				<integer>502</integer>
 				<key>y</key>
 				<integer>714</integer>
 				<key>offsetX</key>
@@ -452,7 +452,7 @@
 				<key>originalHeight</key>
 				<integer>26</integer>
 				<key>x</key>
-				<integer>524</integer>
+				<integer>527</integer>
 				<key>y</key>
 				<integer>714</integer>
 				<key>offsetX</key>
@@ -463,40 +463,40 @@
 			<key>robotBeyeBabsort.png</key>
 			<dict>
 				<key>width</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>height</key>
-				<integer>25</integer>
+				<integer>26</integer>
 				<key>originalWidth</key>
 				<integer>21</integer>
 				<key>originalHeight</key>
 				<integer>26</integer>
 				<key>x</key>
-				<integer>546</integer>
+				<integer>549</integer>
 				<key>y</key>
 				<integer>714</integer>
 				<key>offsetX</key>
-				<real>0.5</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>0.5</real>
+				<real>0</real>
 			</dict>
 			<key>robotBeyeBrelease.png</key>
 			<dict>
 				<key>width</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>height</key>
-				<integer>25</integer>
+				<integer>26</integer>
 				<key>originalWidth</key>
 				<integer>21</integer>
 				<key>originalHeight</key>
 				<integer>26</integer>
 				<key>x</key>
-				<integer>568</integer>
+				<integer>572</integer>
 				<key>y</key>
 				<integer>714</integer>
 				<key>offsetX</key>
-				<real>0.5</real>
+				<real>0</real>
 				<key>offsetY</key>
-				<real>0.5</real>
+				<real>0</real>
 			</dict>
 		</dict>
 		<key>metadata</key>

@@ -76,7 +76,6 @@ var Player = ccs.Armature.extend({
     },
 
     phyUpdate : function() {
-
         var pos = this.phyObj.getPosition();
         this.x = pos.x;
         this.y = pos.y;
@@ -85,14 +84,26 @@ var Player = ccs.Armature.extend({
 
 
     jump : function (factor){
-        factor = factor || 1;
-        if(this.y < 90){
-            this.phyObj.body.vy += PLAYER_JUMP_ADD_SPEED_Y * factor;
+//        factor = factor || 1;
+//        if(this.y < PLAYER_JUMP_TOP){
+//            this.phyObj.body.vy += PLAYER_JUMP_ADD_SPEED_Y * factor;
+//        }
+
+        if (!this.isJump){
+            this.isJump = true;
+
+//            this.jump_f = cp.v(0, PLAYER_JUMP_FORCE); // be used in magnetic system.
         }
+    },
+    isJump : false,
+//    jump_f : cp.v(0,0),
+    resetJump : function(){
+        this.isJump = false;
+//        this.jump_f.x = 0;
+//        this.jump_f.y = 0;
     },
 
     hitGround : function (point){
-
         if (this.fire_emitter) {
             var emitter_pos = this.convertToNodeSpace(point);
             this.fire_emitter.setPosition( emitter_pos );
@@ -119,9 +130,7 @@ var Player = ccs.Armature.extend({
                 cc.audioEngine.playEffect(res.Frict1_ogg , false);
                 this.scheduleOnce(this.resetFrictPlaying, 3.5);
             }
-
         }
-
     },
     resetFrictPlaying : function() {
         this.isFrictPlaying = false;
@@ -132,7 +141,6 @@ var Player = ccs.Armature.extend({
     },
 
     eatItem : function () {
-        console.log("bbbbbbbbbbbbbb");
         // create sprite sheet
 //        cc.spriteFrameCache.addSpriteFrames(res.Robot_plist);
 //        this.spriteSheet = cc.SpriteBatchNode.create(res.Robot_png);
@@ -159,6 +167,34 @@ var Player = ccs.Armature.extend({
 //
 //        this.runAction(cc.animate(mouthOpen));
 
+    },
+    repulsion : function (index) {
+        var old_index = this.getAnimation().getCurrentMovementID();
+        var current_name = this.getAnimation().getAnimationData().movementNames[index];
+//        console.log(current_name);
+        if (old_index !== current_name) {
+
+            this.getAnimation().playWithIndex(index);
+        }
+
+    },
+    attraction : function (index) {
+        var old_index = this.getAnimation().getCurrentMovementID();
+        var current_name = this.getAnimation().getAnimationData().movementNames[index];
+//        console.log(current_name);
+        if (old_index !== current_name) {
+
+            this.getAnimation().playWithIndex(index);
+        }
+    },
+    normal : function (index) {
+        var old_index = this.getAnimation().getCurrentMovementID();
+        var current_name = this.getAnimation().getAnimationData().movementNames[index];
+//        console.log(current_name);
+        if (old_index !== current_name) {
+
+            this.getAnimation().playWithIndex(index);
+        }
     }
 
 
